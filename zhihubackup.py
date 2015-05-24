@@ -12,9 +12,10 @@ if __name__ == '__main__':
     parser.add_argument('filename', metavar='filename', type=str, help="output file name")
     args = parser.parse_args()
     r = requests.get(args.url);
-    soup = BeautifulSoup(r.text)
+    soup = BeautifulSoup(r.text, from_encoding="utf-8")
     body = soup.select('.' + body_class)
+    print(body)
     f = open(args.filename, 'w', encoding="utf-8")
-    f.write(html2text(body[0].prettify()))
+    f.write(html2text(body[0].extract()))
 
     f.close()
